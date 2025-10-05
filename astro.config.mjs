@@ -1,5 +1,6 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
+import vercel from '@astrojs/vercel/static'; // o `vercel()` si querés SSR.
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  adapter: vercel(),
+});

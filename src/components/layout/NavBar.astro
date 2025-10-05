@@ -1,0 +1,296 @@
+---
+interface NavLink {
+  label: string;
+  href: string;
+}
+
+interface SocialLink {
+  label: string;
+  href: string;
+  icon: 'instagram' | 'youtube';
+}
+
+export interface Props {
+  links: readonly NavLink[];
+  social: readonly SocialLink[];
+}
+
+const { links, social } = Astro.props as Props;
+---
+
+<header class="nav" aria-label="Principal">
+  <div class="container nav__inner card-surface">
+    <a class="nav__brand" href="#hero" aria-label="Ir al inicio">
+      <img src="/images/logobgremove2.png" alt="El Rincón del Arte" loading="lazy" />
+    </a>
+    <button class="nav__toggle" type="button" aria-label="Abrir menú" aria-expanded="false" data-nav-toggle>
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="nav__links" data-nav-links>
+      <ul>
+        {links.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+      <div class="nav__social">
+        {social.map((item) => (
+          <a href={item.href} target="_blank" rel="noreferrer" aria-label={item.label}>
+            {item.icon === 'instagram' ? (
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zm5 5.2A3.8 3.8 0 1 0 15.8 12 3.79 3.79 0 0 0 12 8.2zm0 6.2A2.4 2.4 0 1 1 14.4 12 2.39 2.39 0 0 1 12 14.4zm6.5-6.73a.9.9 0 1 1-1.8 0 .9.9 0 0 1 1.8 0Z"
+                />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M21.6 7.2a2.4 2.4 0 0 0-1.69-1.7C18 5 12 5 12 5s-6 0-7.91.5a2.4 2.4 0 0 0-1.69 1.7A24.9 24.9 0 0 0 2 12a24.9 24.9 0 0 0 .4 4.8 2.4 2.4 0 0 0 1.69 1.7C6 19 12 19 12 19s6 0 7.91-.5a2.4 2.4 0 0 0 1.69-1.7A24.9 24.9 0 0 0 22 12a24.9 24.9 0 0 0-.4-4.8ZM10 15.02V8.98L15.5 12Z"
+                />
+              </svg>
+            )}
+          </a>
+        ))}
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 1.25rem 0;
+    backdrop-filter: blur(22px);
+  }
+
+  .nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.25);
+    z-index: -1;
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 0.85rem 1.5rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .nav__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text);
+  }
+
+  .nav__brand img {
+    width: 196px;
+    height: 66px;
+    object-fit: contain;
+  }
+
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .nav__links ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav__links a {
+    font-weight: 500;
+    color: var(--color-text-muted);
+    position: relative;
+    transition: color var(--transition-base);
+  }
+
+  .nav__links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-secondary));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-base);
+  }
+
+  .nav__links a:hover,
+  .nav__links a:focus-visible {
+    color: var(--color-text);
+  }
+
+  .nav__links a:hover::after,
+  .nav__links a:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .nav__social {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-left: 1.5rem;
+    border-left: 1px solid rgba(98, 92, 111, 0.18);
+  }
+
+  .nav__social a {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(245, 155, 189, 0.18);
+    transition: transform var(--transition-base), background var(--transition-base);
+  }
+
+  .nav__social svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--color-accent-strong);
+  }
+
+  .nav__social a:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, rgba(245, 155, 189, 0.35), rgba(156, 218, 220, 0.25));
+  }
+
+  .nav__toggle {
+    display: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 30px rgba(50, 37, 69, 0.12);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+  }
+
+  .nav__toggle span {
+    width: 22px;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 999px;
+    transition: transform var(--transition-base), opacity var(--transition-base);
+  }
+
+  @media (max-width: 960px) {
+    .nav__toggle {
+      display: inline-flex;
+    }
+
+    .nav__links {
+      position: absolute;
+      inset: calc(100% + 12px) 1rem auto;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      width: calc(100% - 2rem);
+      border-radius: var(--radius-md);
+      background: var(--color-surface-strong);
+      box-shadow: 0 24px 48px rgba(50, 37, 69, 0.16);
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: opacity var(--transition-base), transform var(--transition-base);
+    }
+
+    .nav__links[data-open="true"] {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .nav__links ul {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .nav__social {
+      width: 100%;
+      padding-left: 0;
+      border-left: none;
+      justify-content: flex-start;
+    }
+
+    .nav__inner {
+      position: relative;
+      padding: 0.85rem 1rem;
+    }
+  }
+
+  .nav__toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .nav__toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav__toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-nav-links]');
+
+  const closeMenu = () => {
+    if (!toggle || !menu) return;
+    toggle.setAttribute('aria-expanded', 'false');
+    menu.dataset.open = 'false';
+    document.body.style.removeProperty('overflow');
+  };
+
+  const openMenu = () => {
+    if (!toggle || !menu) return;
+    toggle.setAttribute('aria-expanded', 'true');
+    menu.dataset.open = 'true';
+    document.body.style.overflow = 'hidden';
+  };
+
+  toggle?.addEventListener('click', () => {
+    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+    if (isExpanded) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  menu?.querySelectorAll('a').forEach((anchor) => {
+    anchor.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 960) {
+      closeMenu();
+    }
+  });
+</script>

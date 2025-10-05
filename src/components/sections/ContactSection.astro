@@ -1,0 +1,147 @@
+<section id="contacto" class="contact">
+  <div class="container contact__layout card-surface fade-up">
+    <div class="contact__info">
+      <span class="tag">Contacto</span>
+      <h2>Conversemos sobre tu próximo paso</h2>
+      <p>
+        Escríbinos para reservar una clase de prueba, recibir asesoramiento personalizado o conocer los
+        valores de las membresías.
+      </p>
+      <ul>
+        <li>
+          <strong>Email</strong>
+          <a href="mailto:hola@elrincondelarte.com">hola@elrincondelarte.com</a>
+        </li>
+        <li>
+          <strong>Teléfono / WhatsApp</strong>
+          <a href="https://wa.me/5490000000000" target="_blank" rel="noreferrer">+54 9 000 000 0000</a>
+        </li>
+        <li>
+          <strong>Estudio</strong>
+          <span>Córdoba Capital · Barrio Nueva Córdoba</span>
+        </li>
+      </ul>
+    </div>
+    <form class="contact__form" name="consulta" method="post" data-netlify="true">
+      <input type="hidden" name="form-name" value="consulta" />
+      <div class="form__field">
+        <label for="nombre">Nombre y apellido</label>
+        <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" required />
+      </div>
+      <div class="form__field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="nombre@email.com" required />
+      </div>
+      <div class="form__field">
+        <label for="telefono">Teléfono</label>
+        <input id="telefono" name="telefono" type="tel" placeholder="Código de área + número" />
+      </div>
+      <div class="form__field form__field--full">
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Contanos qué te gustaría aprender"></textarea>
+      </div>
+      <button class="btn" type="submit">Enviar consulta</button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .contact__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 3rem;
+    padding: 3rem;
+    background: linear-gradient(150deg, rgba(255, 255, 255, 0.9), rgba(245, 155, 189, 0.25));
+  }
+
+  .contact__info h2 {
+    margin: 0.75rem 0 1rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  .contact__info p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .contact__info ul {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .contact__info li {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .contact__info strong {
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text);
+  }
+
+  .contact__info a,
+  .contact__info span {
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+
+  .contact__form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .form__field {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .form__field--full {
+    grid-column: 1 / -1;
+  }
+
+  label {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  input,
+  textarea {
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(98, 92, 111, 0.2);
+    padding: 0.85rem 1rem;
+    font: inherit;
+    color: var(--color-text);
+    background: rgba(255, 255, 255, 0.92);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-color: rgba(245, 155, 189, 0.55);
+    box-shadow: 0 0 0 4px rgba(245, 155, 189, 0.18);
+  }
+
+  @media (max-width: 900px) {
+    .contact__layout {
+      grid-template-columns: 1fr;
+      padding: 2.5rem;
+    }
+
+    .contact__form {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .contact__layout {
+      padding: 2rem;
+    }
+  }
+</style>

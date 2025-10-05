@@ -1,0 +1,155 @@
+---
+interface SocialLink {
+  label: string;
+  href: string;
+  icon: 'instagram' | 'youtube';
+}
+
+export interface Props {
+  social: readonly SocialLink[];
+}
+
+const { social } = Astro.props as Props;
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__content">
+      <div class="footer__brand">
+        <img src="/images/logobgremove.png" alt="El Rincón del Arte" loading="lazy" />
+        <div>
+          <h3>El Rincón del Arte</h3>
+          <p>
+            Academia de danza y espacio creativo. Formación integral para artistas de todas las edades en
+            Córdoba.
+          </p>
+        </div>
+      </div>
+      <div class="footer__links">
+        <strong>Seguinos</strong>
+        <div class="footer__social">
+          {social.map((item) => (
+            <a href={item.href} target="_blank" rel="noreferrer" aria-label={item.label}>
+              {item.icon === 'instagram' ? (
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zm5 5.2A3.8 3.8 0 1 0 15.8 12 3.79 3.79 0 0 0 12 8.2zm0 6.2A2.4 2.4 0 1 1 14.4 12 2.39 2.39 0 0 1 12 14.4zm6.5-6.73a.9.9 0 1 1-1.8 0 .9.9 0 0 1 1.8 0Z"
+                  />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M21.6 7.2a2.4 2.4 0 0 0-1.69-1.7C18 5 12 5 12 5s-6 0-7.91.5a2.4 2.4 0 0 0-1.69 1.7A24.9 24.9 0 0 0 2 12a24.9 24.9 0 0 0 .4 4.8 2.4 2.4 0 0 0 1.69 1.7C6 19 12 19 12 19s6 0 7.91-.5a2.4 2.4 0 0 0 1.69-1.7A24.9 24.9 0 0 0 22 12a24.9 24.9 0 0 0-.4-4.8ZM10 15.02V8.98L15.5 12Z"
+                  />
+                </svg>
+              )}
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="footer__cta">
+        <strong>¿Listo para bailar?</strong>
+        <p>Sumate a una clase de prueba o escribinos por tu beca de entrenamiento.</p>
+        <a class="btn" href="#contacto">Contactar</a>
+      </div>
+    </div>
+    <div class="footer__legal">
+      <span>© {currentYear} El Rincón del Arte. Todos los derechos reservados.</span>
+      <a href="#hero">Volver arriba</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding: 4rem 0 2.5rem;
+    color: var(--color-text);
+  }
+
+  .footer__content {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    align-items: start;
+    margin-bottom: 2.5rem;
+  }
+
+  .footer__brand {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .footer__brand img {
+    width: 94px;
+    height: 94px;
+    object-fit: contain;
+  }
+
+  .footer__brand h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.35rem;
+  }
+
+  .footer__brand p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .footer__links strong,
+  .footer__cta strong {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .footer__social {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .footer__social a {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(245, 155, 189, 0.2);
+    display: grid;
+    place-items: center;
+    transition: transform var(--transition-base), background var(--transition-base);
+  }
+
+  .footer__social svg {
+    width: 22px;
+    height: 22px;
+    fill: var(--color-accent-strong);
+  }
+
+  .footer__social a:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, rgba(245, 155, 189, 0.35), rgba(156, 218, 220, 0.3));
+  }
+
+  .footer__cta p {
+    margin: 0 0 1rem;
+    color: var(--color-text-muted);
+  }
+
+  .footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    border-top: 1px solid rgba(98, 92, 111, 0.2);
+    padding-top: 1.5rem;
+  }
+
+  .footer__legal a {
+    color: var(--color-accent-strong);
+    font-weight: 600;
+  }
+</style>

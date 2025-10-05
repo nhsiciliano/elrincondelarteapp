@@ -1,0 +1,116 @@
+---
+import { schedule2025 } from '../../data/schedule';
+---
+
+<section id="horarios-2025" class="schedule">
+  <div class="container">
+    <div class="section-heading fade-up">
+      <span>Horarios 2025</span>
+      <h2>Planificá tu semana con nuestras clases</h2>
+      <p>
+        Programación de Lunes a Viernes con combinaciones de entrenamiento y montaje coreográfico. Consultá
+        por grupos especiales o clases particulares.
+      </p>
+    </div>
+    <div class="schedule__grid">
+      {schedule2025.map((day, index) => (
+        <article class="schedule__card card-surface fade-up" style={`animation-delay: ${index * 70}ms`}>
+          <header>
+            <h3>{day.day}</h3>
+          </header>
+          <ul>
+            {day.sessions.map((session) => (
+              <li>
+                <div>
+                  <strong>{session.time}</strong>
+                  <span>{session.className}</span>
+                </div>
+                <small>{session.level}</small>
+                {session.notes && <em>{session.notes}</em>}
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .schedule__grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+  }
+
+  .schedule__card {
+    padding: 2rem 2.25rem;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(156, 218, 220, 0.25));
+  }
+
+  .schedule__card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(245, 155, 189, 0.35), transparent 55%);
+    pointer-events: none;
+  }
+
+  .schedule__card header {
+    position: relative;
+    z-index: 1;
+  }
+
+  .schedule__card h3 {
+    margin: 0;
+    font-size: 1.35rem;
+    letter-spacing: 0.02em;
+  }
+
+  .schedule__card ul {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .schedule__card li {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .schedule__card li div {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+
+  .schedule__card strong {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .schedule__card span {
+    font-weight: 600;
+    color: var(--color-accent-strong);
+  }
+
+  .schedule__card small {
+    color: var(--color-text-muted);
+  }
+
+  .schedule__card em {
+    color: var(--color-text);
+    font-style: normal;
+    font-size: 0.9rem;
+    opacity: 0.7;
+  }
+</style>

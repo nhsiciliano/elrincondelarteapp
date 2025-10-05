@@ -1,0 +1,379 @@
+---
+import { galleryItems } from '../../data/gallery';
+---
+
+<section id="galeria" class="gallery">
+  <div class="container">
+    <div class="section-heading fade-up">
+      <span>Galería</span>
+      <h2>Momentos vivos de nuestra comunidad</h2>
+      <p>
+        Ensayos, muestras y backstage de las producciones que nos permiten crecer en escena y en la sala de
+        entrenamiento.
+      </p>
+    </div>
+    <div class="gallery__carousel">
+      <button class="gallery__control gallery__control--prev" type="button" aria-label="Ver fotos anteriores" data-gallery-prev>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" /></svg>
+      </button>
+      <div class="gallery__viewport" data-gallery-viewport>
+        <div class="gallery__track">
+          {galleryItems.map((item, index) => (
+            <button
+              class={`gallery__item fade-up orientation-${item.orientation ?? 'landscape'}`}
+              style={`animation-delay: ${index * 60}ms`}
+              type="button"
+              data-gallery-item
+              data-src={item.src}
+              data-alt={item.alt}
+            >
+              <img src={item.src} alt={item.alt} loading="lazy" />
+            </button>
+          ))}
+        </div>
+      </div>
+      <button class="gallery__control gallery__control--next" type="button" aria-label="Ver fotos siguientes" data-gallery-next>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.59 16.59 10 18l6-6-6-6-1.41 1.41L13.17 12z" /></svg>
+      </button>
+    </div>
+    <dialog class="gallery__lightbox" data-gallery-dialog>
+      <button class="gallery__close" type="button" aria-label="Cerrar" data-gallery-close>
+        <span aria-hidden="true">×</span>
+      </button>
+      <img data-gallery-active alt="" />
+      <p data-gallery-caption></p>
+    </dialog>
+  </div>
+</section>
+
+<style>
+  .gallery__carousel {
+    position: relative;
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .gallery__carousel::before,
+  .gallery__carousel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 90px;
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity var(--transition-base);
+  }
+
+  .gallery__carousel.is-start::before {
+    opacity: 0;
+  }
+
+  .gallery__carousel.is-end::after {
+    opacity: 0;
+  }
+
+  .gallery__carousel::before {
+    left: 0;
+    background: linear-gradient(90deg, var(--color-background), transparent);
+  }
+
+  .gallery__carousel::after {
+    right: 0;
+    background: linear-gradient(270deg, var(--color-background), transparent);
+  }
+
+  .gallery__viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex: 1;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 0 0.25rem 0 0.25rem;
+    mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent);
+  }
+
+  .gallery__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery__track {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0 0.5rem 1.25rem;
+  }
+
+  .gallery__item {
+    position: relative;
+    flex: 0 0 clamp(240px, 32vw, 420px);
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: 0;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 30px 40px rgba(47, 42, 52, 0.16);
+    background: transparent;
+    scroll-snap-align: center;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .orientation-portrait {
+    flex-basis: clamp(220px, 26vw, 340px);
+    aspect-ratio: 3 / 4;
+  }
+
+  .orientation-landscape {
+    aspect-ratio: 16 / 10;
+  }
+
+  .gallery__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.02);
+    transition: transform var(--transition-base);
+  }
+
+  .gallery__item::after {
+    content: 'Ver en grande';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(47, 42, 52, 0.05), rgba(47, 42, 52, 0.45));
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+
+  .gallery__item:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 26px 46px rgba(47, 42, 52, 0.2);
+  }
+
+  .gallery__item:hover::after {
+    opacity: 1;
+  }
+
+  .gallery__item:hover img {
+    transform: scale(1.07);
+  }
+
+  .gallery__control {
+    position: relative;
+    z-index: 2;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 14px 30px rgba(47, 42, 52, 0.18);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: transform var(--transition-base), background var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .gallery__control svg {
+    width: 22px;
+    height: 22px;
+    fill: var(--color-text);
+  }
+
+  .gallery__control:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 18px 34px rgba(47, 42, 52, 0.2);
+  }
+
+  .gallery__control:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .gallery__lightbox {
+    border: none;
+    padding: 0;
+    background: rgba(16, 8, 24, 0.75);
+    backdrop-filter: blur(20px);
+    max-width: min(90vw, 960px);
+    width: 100%;
+    margin: auto;
+  }
+
+  .gallery__lightbox::backdrop {
+    background: rgba(16, 8, 24, 0.65);
+  }
+
+  .gallery__lightbox img {
+    width: 100%;
+    display: block;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  }
+
+  .gallery__lightbox p {
+    margin: 0;
+    padding: 1.5rem 2rem 2rem;
+    color: #fff;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  .gallery__close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--color-text);
+    font-size: 1.8rem;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+  }
+
+  .gallery__close:hover {
+    background: rgba(255, 255, 255, 0.95);
+  }
+
+  @media (max-width: 960px) {
+    .gallery__control {
+      width: 42px;
+      height: 42px;
+    }
+
+    .gallery__carousel::before,
+    .gallery__carousel::after {
+      width: 60px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .gallery__carousel {
+      margin-top: 2.5rem;
+      gap: 0.5rem;
+    }
+
+    .gallery__control {
+      position: absolute;
+      top: calc(50% - 24px);
+    }
+
+    .gallery__control--prev {
+      left: 0.25rem;
+    }
+
+    .gallery__control--next {
+      right: 0.25rem;
+    }
+
+    .gallery__viewport {
+      padding: 0 0.75rem;
+    }
+
+    .gallery__track {
+      gap: 1.1rem;
+    }
+
+    .gallery__item {
+      flex-basis: clamp(220px, 70vw, 320px);
+    }
+
+    .gallery__carousel::before,
+    .gallery__carousel::after {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const carousel = document.querySelector<HTMLElement>('.gallery__carousel');
+  const viewport = document.querySelector<HTMLElement>('[data-gallery-viewport]');
+  const prevControl = document.querySelector<HTMLButtonElement>('[data-gallery-prev]');
+  const nextControl = document.querySelector<HTMLButtonElement>('[data-gallery-next]');
+
+  const updateControlsState = () => {
+    if (!viewport || !prevControl || !nextControl) return;
+    const maxScrollLeft = viewport.scrollWidth - viewport.clientWidth;
+    prevControl.disabled = viewport.scrollLeft <= 4;
+    nextControl.disabled = viewport.scrollLeft >= maxScrollLeft - 4;
+    carousel?.classList.toggle('is-start', prevControl.disabled);
+    carousel?.classList.toggle('is-end', nextControl.disabled);
+  };
+
+  prevControl?.addEventListener('click', () => {
+    if (!viewport) return;
+    viewport.scrollBy({ left: viewport.clientWidth * -0.8, behavior: 'smooth' });
+  });
+
+  nextControl?.addEventListener('click', () => {
+    if (!viewport) return;
+    viewport.scrollBy({ left: viewport.clientWidth * 0.8, behavior: 'smooth' });
+  });
+
+  viewport?.addEventListener('scroll', () => {
+    updateControlsState();
+  });
+
+  window.addEventListener('resize', () => {
+    updateControlsState();
+  });
+
+  updateControlsState();
+
+  const dialog = document.querySelector<HTMLDialogElement>('[data-gallery-dialog]');
+  const activeImage = dialog?.querySelector<HTMLImageElement>('[data-gallery-active]');
+  const caption = dialog?.querySelector<HTMLParagraphElement>('[data-gallery-caption]');
+  const items = document.querySelectorAll<HTMLButtonElement>('[data-gallery-item]');
+
+  items.forEach((item) => {
+    item.addEventListener('click', () => {
+      const src = item.getAttribute('data-src');
+      const alt = item.getAttribute('data-alt');
+      if (!dialog || !activeImage || !caption || !src) return;
+      activeImage.setAttribute('src', src);
+      activeImage.setAttribute('alt', alt ?? 'Imagen de la galería');
+      caption.textContent = alt ?? '';
+      if (typeof dialog.showModal === 'function') {
+        dialog.showModal();
+      } else {
+        dialog.setAttribute('open', 'true');
+      }
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  const closeDialog = () => {
+    if (!dialog) return;
+    if (typeof dialog.close === 'function') {
+      dialog.close();
+    } else {
+      dialog.removeAttribute('open');
+    }
+    document.body.style.removeProperty('overflow');
+  };
+
+  dialog?.addEventListener('click', (event) => {
+    if (event.target === dialog) {
+      closeDialog();
+    }
+  });
+
+  dialog?.querySelector<HTMLButtonElement>('[data-gallery-close]')?.addEventListener('click', closeDialog);
+
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeDialog();
+    }
+  });
+</script>

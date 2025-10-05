@@ -1,0 +1,116 @@
+<section id="sobre-mi" class="about">
+  <div class="container">
+    <div class="about__layout card-surface fade-up">
+      <div class="about__intro">
+        <span class="tag">Sobre Mí</span>
+        <h2>Leila Palavecino</h2>
+        <p>
+          Bailarina, docente y creadora de El Rincón del Arte. Formada en danza clásica, contemporánea y
+          técnicas somáticas, acompaño procesos artísticos con una mirada integral que combina cuidado,
+          disciplina y exploración.
+        </p>
+      </div>
+      <div class="about__details">
+        <div class="about__highlight">
+          <strong>Dirección artística y pedagógica</strong>
+          <p>
+            Desarrollo programas que integran técnica, entrenamiento físico y escenario, priorizando el
+            bienestar y los objetivos personales de cada estudiante.
+          </p>
+        </div>
+        <ul class="about__list">
+          <li>
+            <h3>Trayectoria</h3>
+            <p>
+              Más de una década formando bailarines en niveles iniciales, intermedios y avanzados, con
+              producciones anuales y laboratorios coreográficos.
+            </p>
+          </li>
+          <li>
+            <h3>Metodología</h3>
+            <p>
+              Clases vivenciales, feedback constante y combinaciones técnicas que potencian la confianza en tu
+              movimiento.
+            </p>
+          </li>
+          <li>
+            <h3>Visión</h3>
+            <p>
+              Construir una comunidad donde la danza sea puente para el crecimiento artístico y humano.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about__layout {
+    padding: 3rem;
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(247, 214, 224, 0.45));
+  }
+
+  .about__intro h2 {
+    margin: 0.5rem 0 1.5rem;
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+
+  .about__intro p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .about__details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .about__highlight {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    box-shadow: 0 18px 34px rgba(47, 42, 52, 0.1);
+  }
+
+  .about__highlight strong {
+    display: block;
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .about__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .about__list h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .about__list p {
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .about__layout {
+      grid-template-columns: 1fr;
+      padding: 2.5rem;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .about__layout {
+      padding: 2rem;
+    }
+  }
+</style>
