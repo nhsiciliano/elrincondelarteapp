@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
-import vercel from '@astrojs/vercel/static'; // o `vercel()` si querés SSR.
+import vercel from '@astrojs/vercel';
 
 export default defineConfig({
   adapter: vercel(),
